@@ -3,7 +3,7 @@
 
   "name": "Coloe Cookie Crusher",
   "description": "This extension clears all cookies in your browser and refreshes the current page.",
-  "version": "0.0.0.3",
+  "version": "0.0.0.4",
 
   "browser_action": {
     "default_icon": "icon.png",

@@ -1,17 +1,17 @@
-// Get URL of selected tab and send it to the background.js file
-chrome.tabs.getSelected(null,function(tab) {
-  var tablink = tab.url;
+chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  const tablink = tabs[0].url;
   console.log(tablink);
-  chrome.runtime.sendMessage({message: tab.url}, function(response) {});
+  chrome.runtime.sendMessage({ message: tablink }).catch((error) => {
+    console.error('[CookieRefresh] Error sending message: ', error);
+  });
 });
 
-// Once cookies have been cleared, reload the page
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	if (request.message === 'cookies cleared') {
-  	chrome.tabs.reload();
-	}
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.message === 'cookies cleared') {
+    chrome.tabs.reload();
+  }
 });
 
-setTimeout(function() {
-	window.close();
+setTimeout(function () {
+  window.close();
 }, 400);
